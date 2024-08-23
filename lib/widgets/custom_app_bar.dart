@@ -10,6 +10,7 @@ import '../screens/my_order_page.dart';
 import '../screens/profile_page.dart';
 import '../screens/cart_page.dart';
 import '../screens/login.dart';
+import '../utils/app_config.dart';
 import '../utils/user_session.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -20,6 +21,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      iconTheme: const IconThemeData(
+        color: AppConfig.themeColor, // Set the color of the back arrow here
+      ),
+      backgroundColor :Colors.white,
       title: Text(title),
       actions: <Widget>[
         // Shopping Cart Icon with Item Count
@@ -28,7 +33,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             return IconButton(
               icon: Stack(
                 children: <Widget>[
-                  Icon(Icons.shopping_cart),
+                  const Icon(Icons.shopping_cart_outlined, color: AppConfig.themeColor, size: 30,),
                   if (state is CartLoaded && state.cartItems.isNotEmpty)
                     Positioned(
                       right: 0,
@@ -104,7 +109,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               );
             }).toList();
           },
-          icon: Icon(Icons.more_horiz),
+          icon: Icon(Icons.more_horiz, color: AppConfig.themeColor, size: 30,),
         ),
       ],
     );

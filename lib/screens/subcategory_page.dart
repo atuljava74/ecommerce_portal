@@ -40,16 +40,16 @@ class SubcategoryList extends StatelessWidget {
         } else if (state is SubcategoryLoaded) {
           if (state.subcategories.isEmpty) {
             // If no subcategories, navigate directly to ProductListingPage
-            return Center(
+            return const Center(
               child: Text('No subcategories found.'),
             );
           }
           return GridView.builder(
             padding: const EdgeInsets.all(10.0),
             itemCount: state.subcategories.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, // Number of columns
-              childAspectRatio: 3 / 2, // Width to height ratio
+              childAspectRatio: 3 / 4, // Width to height ratio
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
             ),

@@ -1,21 +1,156 @@
+import 'package:ecommerce_portal/screens/profile_page.dart';
+import 'package:ecommerce_portal/utils/app_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../blocs/auth/auth_bloc.dart';
+import '../blocs/auth/auth_event.dart';
+import '../blocs/cart/cart_bloc.dart';
+import '../blocs/cart/cart_state.dart';
 import '../blocs/category/category_bloc.dart';
 import '../blocs/category/category_event.dart';
 import '../blocs/category/category_state.dart';
+import '../blocs/orders/orders_bloc.dart';
+import '../blocs/orders/orders_event.dart';
 import '../models/category_model.dart';
+import '../utils/user_session.dart';
 import '../widgets/custom_app_bar.dart';
+import 'cart_page.dart';
+import 'login.dart';
+import 'my_order_page.dart';
 import 'subcategory_page.dart'; // Import SubcategoryPage
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Categories'),
+      appBar: getAppBar(context),
       body: BlocProvider(
         create: (context) => CategoryBloc()..add(LoadCategories()),
         child: CategoryList(),
       ),
+    );
+  }
+
+  getAppBar(context) {
+    return AppBar(
+      backgroundColor : Colors.white,
+      leading: Container( margin: EdgeInsets.only(left: 15),
+        child: Image.asset(
+          'assets/top_logo.png', // Add your image to the assets folder and update this path
+          height: 60,
+        ),
+      ),
+      title: Container(
+        height: 40,
+        child: TextField(
+          decoration: InputDecoration(
+            hintText: 'Search...',
+            hintStyle: TextStyle(color: Colors.grey),
+            prefixIcon: Icon(Icons.search, color: Colors.grey),
+            filled: false, // No background color filled inside the text field
+            contentPadding: EdgeInsets.symmetric(vertical: 0),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: BorderSide(color: Colors.grey[300]!, width: 1), // Light border color
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: BorderSide(color: Colors.grey[400]!, width: 1), // Slightly darker border on focus
+            ),
+          ),
+          onSubmitted: (query) {
+            // Handle the search query submission
+            print('Search query: $query');
+          },
+        ),
+      ),
+
+      actions: <Widget>[
+        // Shopping Cart Icon with Item Count
+        BlocBuilder<CartBloc, CartState>(
+          builder: (context, state) {
+            return IconButton(
+              icon: Stack(
+                children: <Widget>[
+                  const Icon(Icons.shopping_cart_outlined, color: AppConfig.themeColor, size: 30,),
+                  if (state is CartLoaded && state.cartItems.isNotEmpty)
+                    Positioned(
+                      right: 0,
+                      child: Container(
+                        padding: const EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 12,
+                          minHeight: 12,
+                        ),
+                        child: Text(
+                          '${state.cartItems.length}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 8,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+              onPressed: () {
+                // Navigate to Cart Page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CartPage()),
+                );
+              },
+            );
+          },
+        ),
+        // 3 Vertical Dot Menu Icon
+        PopupMenuButton<String>(
+          onSelected: (value) {
+            switch (value) {
+              case 'Profile':
+              // Navigate to Profile Page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                );
+                break;
+              case  'My Orders' :
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BlocProvider(
+                      create: (context) => OrdersBloc()..add(LoadOrders(UserSession.userId!)),
+                      child: MyOrdersPage(),
+                    ),
+                  ),
+                );
+                break;
+              case 'Logout':
+              // Log out and navigate to Login Page
+                context.read<AuthBloc>().add(AuthLogoutRequested());
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+                break;
+            }
+          },
+          itemBuilder: (BuildContext context) {
+            return {'Profile', 'My Orders', 'Logout'}.map((String choice) {
+              return PopupMenuItem<String>(
+                value: choice,
+                child: Text(choice),
+              );
+            }).toList();
+          },
+          icon: const Icon(Icons.more_horiz, size: 30, color: AppConfig.themeColor,),
+        ),
+      ],
     );
   }
 }
@@ -29,13 +164,13 @@ class CategoryList extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         } else if (state is CategoryLoaded) {
           return GridView.builder(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(5.0),
             itemCount: state.categories.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, // Number of columns
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 1, // Number of columns
               childAspectRatio: 3 / 2, // Width to height ratio
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
+              crossAxisSpacing: 3,
+              mainAxisSpacing: 3,
             ),
             itemBuilder: (ctx, index) {
               final category = state.categories[index];
@@ -51,7 +186,6 @@ class CategoryList extends StatelessWidget {
     );
   }
 }
-
 class CategoryItem extends StatelessWidget {
   final Category category;
 
@@ -61,7 +195,6 @@ class CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigate to SubcategoryPage when a category is tapped
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -73,40 +206,67 @@ class CategoryItem extends StatelessWidget {
         );
       },
       child: Card(
-        elevation: 4,
+        elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: Stack(
           children: [
-            Expanded(
-              child: ClipRRect(
-                borderRadius:
-                BorderRadius.vertical(top: Radius.circular(12)),
-                child: Image.network(
-                  category.imageUrl,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => Icon(
-                    Icons.broken_image,
-                    size: 50,
-                    color: Colors.grey,
+
+            /*Positioned(
+              bottom: -100, // Adjust this to control the position of the bubble
+              left: 0,
+              right: 0,
+              child: Container(
+                height: 200, // Adjust the height to control the size of the bubble
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [
+                      Colors.cyan.withOpacity(0.3), // Inner color
+                      Colors.transparent, // Outer transparent color
+                    ],
+                    radius: 50,
+                    center: Alignment.bottomCenter,
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                category.name,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+            ),*/
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    category.name,
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.vertical(bottom: Radius.circular(8)),
+                    child: Image.network(
+                      category.imageUrl,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => const Icon(
+                        Icons.broken_image,
+                        size: 50,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
+            // Circular Gradient Bubble at the Bottom
+
           ],
         ),
       ),
     );
   }
 }
+
+
