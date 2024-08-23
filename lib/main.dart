@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => SplashScreen(),
           '/login': (context) => LoginPage(),
           '/signup': (context) => SignupPage(),
-          '/home': (context) => HomePage(), // Updated to HomeScreen with BottomNavBar
+          '/home': (context) => HomePage()
         },
       ),
     );

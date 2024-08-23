@@ -21,6 +21,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 3,
       iconTheme: const IconThemeData(
         color: AppConfig.themeColor, // Set the color of the back arrow here
       ),
@@ -33,25 +34,26 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             return IconButton(
               icon: Stack(
                 children: <Widget>[
-                  const Icon(Icons.shopping_cart_outlined, color: AppConfig.themeColor, size: 30,),
+                  const Icon(Icons.shopping_cart_outlined, color: AppConfig.themeColor, size: 35,),
                   if (state is CartLoaded && state.cartItems.isNotEmpty)
                     Positioned(
                       right: 0,
+                      top: 0,
                       child: Container(
                         padding: EdgeInsets.all(1),
                         decoration: BoxDecoration(
                           color: Colors.red,
-                          borderRadius: BorderRadius.circular(6),
+                          borderRadius: BorderRadius.circular(2),
                         ),
                         constraints: const BoxConstraints(
-                          minWidth: 12,
-                          minHeight: 12,
+                          minWidth: 15,
+                          minHeight: 15,
                         ),
                         child: Text(
                           '${state.cartItems.length}',
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 8,
+                            fontSize: 10,
                           ),
                           textAlign: TextAlign.center,
                         ),

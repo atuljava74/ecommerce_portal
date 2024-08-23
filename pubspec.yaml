@@ -39,6 +39,8 @@ dependencies:
   equatable: ^2.0.5
   http: ^1.2.2
   shared_preferences: ^2.0.13
+  smooth_page_indicator: ^1.0.0+2
+  flutter_rating_bar: ^4.0.0
 
 dev_dependencies:
   flutter_test:

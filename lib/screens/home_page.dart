@@ -33,6 +33,7 @@ class HomePage extends StatelessWidget {
 
   getAppBar(context) {
     return AppBar(
+      elevation: 3,
       backgroundColor : Colors.white,
       leading: Container( margin: EdgeInsets.only(left: 15),
         child: Image.asset(
