@@ -34,28 +34,30 @@ Before you begin, ensure you have met the following requirements:
 ### Architecture
 The app follows a Layered Architecture using the BLoC (Business Logic Component) Pattern:
 
-Presentation Layer: UI components managed by Flutter widgets (screens/ and widgets/ folders).
-Business Logic Layer: BLoC classes handle business logic and state management (blocs/ folder).
-Data Layer: Models and utility classes that represent and manipulate data (models/ and utils/ folders).
-This architecture ensures separation of concerns, making the app more scalable and easier to maintain.
+1. Presentation Layer: UI components managed by Flutter widgets (screens/ and widgets/ folders).
+2. Business Logic Layer: BLoC classes handle business logic and state management (blocs/ folder).
+3. Data Layer: Models and utility classes that represent and manipulate data (models/ and utils/ folders).
+4. This architecture ensures separation of concerns, making the app more scalable and easier to maintain.
 
 ### Features
-User Authentication: Login and Signup functionality with secure session management.
-Product Catalog: Browse products by category and subcategory, with detailed product descriptions and images.
-Cart Management: Add products to the cart, manage quantities, and view cart totals.
-Checkout Process: Seamless checkout with shipping information, payment method selection, and order confirmation.
-Order History: View past orders with detailed information on each purchase.
-Responsive UI: Beautifully designed UI.
+
+1. User Authentication: Login and Signup functionality with secure session management.
+2. Product Catalog: Browse products by category and subcategory, with detailed product descriptions and images.
+3. Cart Management: Add products to the cart, manage quantities, and view cart totals.
+4. Checkout Process: Seamless checkout with shipping information, payment method selection, and order confirmation.
+5. Order History: View past orders with detailed information on each purchase.
+6. Responsive UI: Beautifully designed UI.
 
 ### Screenshot
 
 ### Dependencies
+
 Key packages used in the project:
 
-flutter_bloc: State management using the BLoC pattern.
-cached_network_image: Efficient image caching and loading.
-lottie: Beautiful animations for enhancing user experience.
-flutter_rating_bar: Display star ratings in the product detail page.
+1. flutter_bloc: State management using the BLoC pattern.
+2. cached_network_image: Efficient image caching and loading.
+3. lottie: Beautiful animations for enhancing user experience.
+4. flutter_rating_bar: Display star ratings in the product detail page.
 
 ### API Integration
 
