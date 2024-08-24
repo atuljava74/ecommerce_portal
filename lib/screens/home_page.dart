@@ -114,13 +114,6 @@ class HomePage extends StatelessWidget {
         PopupMenuButton<String>(
           onSelected: (value) {
             switch (value) {
-              case 'Profile':
-              // Navigate to Profile Page
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfilePage()),
-                );
-                break;
               case  'My Orders' :
                 Navigator.push(
                   context,
@@ -143,7 +136,7 @@ class HomePage extends StatelessWidget {
             }
           },
           itemBuilder: (BuildContext context) {
-            return {'Profile', 'My Orders', 'Logout'}.map((String choice) {
+            return { 'My Orders', 'Logout'}.map((String choice) {
               return PopupMenuItem<String>(
                 value: choice,
                 child: Text(choice),
