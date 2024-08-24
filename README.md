@@ -50,9 +50,15 @@ The app follows a Layered Architecture using the BLoC (Business Logic Component)
 
 ### Screenshot
 
+1. Home Screen
 ![Home Screen](assets/screenshots/Categories.png)
+
+2. Sub Categories
 ![Product Detail](assets/screenshots/SubCategories.png)
+
+3. My Cart
 ![Cart](assets/screenshots/MyCart.png)
+
 
 ### Dependencies
 
