@@ -27,36 +27,11 @@ Before you begin, ensure you have met the following requirements:
    ```bash
    flutter run
    
-###Folder Structure
-
-ecommerce_portal/
-
-├── android/                # Native Android code
-
-├── assets/                 # Assets like images, fonts, etc.
-
-├── ios/                    # Native iOS code
-
-├── lib/                    # Main source code
-
-│   ├── blocs/              # BLoC classes for managing state and business logic
-
-│   ├── models/             # Data models
-
-│   ├── screens/            # UI screens
-
-│   ├── utils/              # Utility classes and helpers
-
-│   └── widgets/            # Reusable widgets
-
-├── test/                   # Unit and widget tests
-
-├── pubspec.yaml            # Flutter dependencies
-
-└── README.md               # Project documentation
+### Folder Structure
 
 
-###Architecture
+
+### Architecture
 The app follows a Layered Architecture using the BLoC (Business Logic Component) Pattern:
 
 Presentation Layer: UI components managed by Flutter widgets (screens/ and widgets/ folders).
@@ -64,18 +39,17 @@ Business Logic Layer: BLoC classes handle business logic and state management (b
 Data Layer: Models and utility classes that represent and manipulate data (models/ and utils/ folders).
 This architecture ensures separation of concerns, making the app more scalable and easier to maintain.
 
-###Features
+### Features
 User Authentication: Login and Signup functionality with secure session management.
 Product Catalog: Browse products by category and subcategory, with detailed product descriptions and images.
 Cart Management: Add products to the cart, manage quantities, and view cart totals.
 Checkout Process: Seamless checkout with shipping information, payment method selection, and order confirmation.
 Order History: View past orders with detailed information on each purchase.
 Responsive UI: Beautifully designed UI.
-###Screenshots
 
+### Screenshot
 
-
-###Dependencies
+### Dependencies
 Key packages used in the project:
 
 flutter_bloc: State management using the BLoC pattern.
@@ -83,6 +57,7 @@ cached_network_image: Efficient image caching and loading.
 lottie: Beautiful animations for enhancing user experience.
 flutter_rating_bar: Display star ratings in the product detail page.
 
-###API Integration
+### API Integration
+
 The app interacts with a backend built using PHP and MySQL. API endpoints manage user authentication, product catalog, cart operations, and order processing. 
 
