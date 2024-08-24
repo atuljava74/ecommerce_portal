@@ -28,19 +28,33 @@ Before you begin, ensure you have met the following requirements:
    flutter run
    
 ###Folder Structure
+
 ecommerce_portal/
+
 ├── android/                # Native Android code
+
 ├── assets/                 # Assets like images, fonts, etc.
+
 ├── ios/                    # Native iOS code
+
 ├── lib/                    # Main source code
+
 │   ├── blocs/              # BLoC classes for managing state and business logic
+
 │   ├── models/             # Data models
+
 │   ├── screens/            # UI screens
+
 │   ├── utils/              # Utility classes and helpers
+
 │   └── widgets/            # Reusable widgets
+
 ├── test/                   # Unit and widget tests
+
 ├── pubspec.yaml            # Flutter dependencies
+
 └── README.md               # Project documentation
+
 
 ###Architecture
 The app follows a Layered Architecture using the BLoC (Business Logic Component) Pattern:
