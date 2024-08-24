@@ -5,6 +5,7 @@ class CartItem {
   final int quantity;
   final String imageUrl;
   final double subtotal;
+  final int productId;
 
   CartItem({
     required this.id,
@@ -13,6 +14,7 @@ class CartItem {
     required this.quantity,
     required this.imageUrl,
     required this.subtotal,
+    required this.productId
   });
 
   factory CartItem.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class CartItem {
       quantity: json['quantity'],
       imageUrl: json['image_url'],
       subtotal: double.parse(json['subtotal'].toString()),
+      productId: json['product_id'],
     );
   }
 
@@ -34,6 +37,7 @@ class CartItem {
       'quantity': quantity,
       'image_url': imageUrl,
       'subtotal': subtotal,
+      'productId' : productId
     };
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_portal/screens/profile_page.dart';
 import 'package:ecommerce_portal/utils/app_config.dart';
 import 'package:flutter/material.dart';
@@ -211,26 +212,6 @@ class CategoryItem extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Stack(
           children: [
-
-            /*Positioned(
-              bottom: -100, // Adjust this to control the position of the bubble
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 200, // Adjust the height to control the size of the bubble
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [
-                      Colors.cyan.withOpacity(0.3), // Inner color
-                      Colors.transparent, // Outer transparent color
-                    ],
-                    radius: 50,
-                    center: Alignment.bottomCenter,
-                  ),
-                ),
-              ),
-            ),*/
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -247,15 +228,13 @@ class CategoryItem extends StatelessWidget {
                 ),
                 Expanded(
                   child: ClipRRect(
-                    borderRadius: BorderRadius.vertical(bottom: Radius.circular(8)),
-                    child: Image.network(
-                      category.imageUrl,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) => const Icon(
-                        Icons.broken_image,
-                        size: 50,
-                        color: Colors.grey,
-                      ),
+                    borderRadius: BorderRadius.vertical(bottom: Radius.circular(10)),
+                    child: CachedNetworkImage(
+                      imageUrl: category.imageUrl,
+                      progressIndicatorBuilder: (context, url, downloadProgress) =>
+                          Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                      errorWidget: (context, url, error) => const Icon(Icons.broken_image,size: 50,
+                        color: Colors.grey,),
                     ),
                   ),
                 ),

@@ -75,13 +75,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         PopupMenuButton<String>(
           onSelected: (value) {
             switch (value) {
-              case 'Profile':
+              /*case 'Profile':
               // Navigate to Profile Page
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => ProfilePage()),
                 );
-                break;
+                break;*/
               case  'My Orders' :
                 Navigator.push(
                   context,
@@ -104,7 +104,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             }
           },
           itemBuilder: (BuildContext context) {
-            return {'Profile', 'My Orders', 'Logout'}.map((String choice) {
+            return {'My Orders', 'Logout'}.map((String choice) {
               return PopupMenuItem<String>(
                 value: choice,
                 child: Text(choice),

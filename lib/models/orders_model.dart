@@ -26,12 +26,16 @@ class OrderItem {
   final String name;
   final int quantity;
   final double price;
+  final String image_url;
+  final String description;
 
   OrderItem({
     required this.id,
     required this.name,
     required this.quantity,
     required this.price,
+    required this.image_url,
+    required this.description
   });
 
   factory OrderItem.fromJson(Map<String, dynamic> json) {
@@ -40,6 +44,8 @@ class OrderItem {
       name: json['name'],
       quantity: json['quantity'],
       price: double.parse(json['price'].toString()),
+      image_url: json['image_url']  ?? "",
+      description : json['description']  ?? "",
     );
   }
 }

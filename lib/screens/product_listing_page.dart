@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_portal/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -93,17 +94,15 @@ class ProductItem extends StatelessWidget {
               flex: 2,
               child: ClipRRect(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-                child: Image.network(
-                  product.imageUrl,
+                child: CachedNetworkImage(
+                  imageUrl: product.imageUrl,
                   fit: BoxFit.fitHeight,
-                  errorBuilder: (context, error, stackTrace) => Icon(
-                    Icons.broken_image,
-                    size: 50,
-                    color: Colors.grey,
-                  ),
-                ),
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                  errorWidget: (context, url, error) => const Icon(Icons.broken_image,size: 50,
+                    color: Colors.grey,),
               ),
-            ),
+            )),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
               child: Column(

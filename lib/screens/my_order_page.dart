@@ -1,15 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/orders/orders_bloc.dart';
 import '../blocs/orders/orders_state.dart';
 import '../models/orders_model.dart';
+import '../widgets/custom_app_bar.dart';
 
 class MyOrdersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('My Orders'),
+      appBar: CustomAppBar(
+        title: 'My Orders',
       ),
       body: BlocBuilder<OrdersBloc, OrdersState>(
         builder: (context, state) {
@@ -37,7 +39,7 @@ class MyOrdersPage extends StatelessWidget {
                       children: [
                         Text(
                           'Order #${order.id}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
@@ -57,11 +59,15 @@ class MyOrdersPage extends StatelessWidget {
                                 children: [
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
-                                    child: Image.network(
-                                      "item.imageUrl", // Assuming imageUrl is the field name in your OrderItem model
+                                    child: CachedNetworkImage(
+                                      imageUrl: item.image_url,
+                                      fit: BoxFit.fitHeight,
                                       width: 80,
                                       height: 80,
-                                      fit: BoxFit.cover,
+                                      progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                          Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                                      errorWidget: (context, url, error) => const Icon(Icons.broken_image,size: 50,
+                                        color: Colors.grey,),
                                     ),
                                   ),
                                   SizedBox(width: 10),
@@ -71,7 +77,7 @@ class MyOrdersPage extends StatelessWidget {
                                       children: [
                                         Text(
                                           item.name,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16,
                                           ),
@@ -81,7 +87,7 @@ class MyOrdersPage extends StatelessWidget {
                                         SizedBox(height: 5),
                                         Text(
                                           '\$${item.price.toStringAsFixed(2)}',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.green,
                                           ),

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_portal/utils/app_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,15 +54,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       controller: _pageController,
                       itemCount: widget.product.imageUrls.length, // Assuming imageUrls is a list of image URLs
                       itemBuilder: (context, index) {
-                        return Image.network(
-                          widget.product.imageUrls[index],
-                          fit: BoxFit.fitHeight,
-                          errorBuilder: (context, error, stackTrace) => const Icon(
-                            Icons.broken_image,
-                            size: 50,
-                            color: Colors.grey,
-                          ),
-                        );
+                        return CachedNetworkImage(
+                            imageUrl: widget.product.imageUrls[index],
+                            fit: BoxFit.fitHeight,
+                            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                            errorWidget: (context, url, error) => const Icon(Icons.broken_image,size: 50,
+                              color: Colors.grey,),
+                          );
                       },
                     ),
                   ),

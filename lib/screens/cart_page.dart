@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_portal/screens/shipping_info_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,7 +51,13 @@ class CartPage extends StatelessWidget {
                       },
                       child: Card(
                         child: ListTile(
-                          leading: Image.network(cartItem.imageUrl, height: 60, fit: BoxFit.fitHeight),
+                          leading: CachedNetworkImage(
+                            imageUrl: cartItem.imageUrl, height: 60, fit: BoxFit.fitHeight,
+                            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                            errorWidget: (context, url, error) => const Icon(Icons.broken_image,size: 50,
+                              color: Colors.grey,),
+                          ),
                           title: Text(cartItem.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                           subtitle: Text('₹${cartItem.price.toStringAsFixed(2)} x ${cartItem.quantity}'),
                           trailing: Text('₹${cartItem.subtotal.toStringAsFixed(2)}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),

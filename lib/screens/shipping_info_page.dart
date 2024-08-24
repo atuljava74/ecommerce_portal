@@ -1,5 +1,7 @@
 import 'package:ecommerce_portal/screens/payment_method_page.dart';
 import 'package:flutter/material.dart';
+import '../utils/app_config.dart';
+import '../widgets/custom_app_bar.dart';
 
 class ShippingInfoPage extends StatefulWidget {
   @override
@@ -16,73 +18,111 @@ class _ShippingInfoPageState extends State<ShippingInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Shipping Information'),
+      appBar: CustomAppBar(
+        title: 'Shipping Information',
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Address'),
-                onChanged: (value) {
-                  setState(() {
-                    _address = value;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your address';
-                  }
-                  return null;
-                },
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Address',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _address = value;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your address';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 20),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'City',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _city = value;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your city';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 20),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Postal Code',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _postalCode = value;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your postal code';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 20),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Country',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _country = value;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your country';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 80), // Space for the button
+                ],
               ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'City'),
-                onChanged: (value) {
-                  setState(() {
-                    _city = value;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your city';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Postal Code'),
-                onChanged: (value) {
-                  setState(() {
-                    _postalCode = value;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your postal code';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Country'),
-                onChanged: (value) {
-                  setState(() {
-                    _country = value;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your country';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
+            ),
+          ),
+          // Sticky Continue to Payment Button
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              padding: EdgeInsets.all(16.0),
+              color: Colors.white,
+              child: ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     Navigator.push(
@@ -98,11 +138,21 @@ class _ShippingInfoPageState extends State<ShippingInfoPage> {
                     );
                   }
                 },
-                child: Text('Continue to Payment'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppConfig.themeColor,
+                  minimumSize: Size(double.infinity, 50), // Full-width button
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+                child: const Text(
+                  'Continue to Payment',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

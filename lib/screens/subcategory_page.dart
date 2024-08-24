@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/subcategory/subcategory_bloc.dart';
@@ -98,14 +99,13 @@ class SubcategoryItem extends StatelessWidget {
               child: ClipRRect(
                 borderRadius:
                 BorderRadius.vertical(top: Radius.circular(12)),
-                child: Image.network(
-                  subcategory.imageUrl,
+                child: CachedNetworkImage(
+                  imageUrl:subcategory.imageUrl,
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => Icon(
-                    Icons.broken_image,
-                    size: 50,
-                    color: Colors.grey,
-                  ),
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                  errorWidget: (context, url, error) => const Icon(Icons.broken_image,size: 50,
+                    color: Colors.grey,),
                 ),
               ),
             ),
