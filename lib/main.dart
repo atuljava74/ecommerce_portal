@@ -2,7 +2,6 @@ import 'package:ecommerce_portal/screens/login.dart';
 import 'package:ecommerce_portal/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'admin/admindashboard.dart';
 import 'blocs/auth/auth_bloc.dart';
 import 'blocs/cart/cart_bloc.dart';
 import 'screens/home_page.dart';
@@ -44,7 +43,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => SplashScreen(),
-          '/login': (context) => AdminDashboard(),
+          '/login': (context) => LoginPage(),
           '/signup': (context) => SignupPage(),
           '/home': (context) => HomePage()
         },
